@@ -271,6 +271,13 @@
 function change(id, delta) {
   const el = document.getElementById(id);
   el.textContent = Math.max(0, parseInt(el.textContent) + delta);
+
+  const total =
+    parseInt(document.getElementById('ciabattini').textContent) * 52 +
+    parseInt(document.getElementById('frallor').textContent) * 65;
+
+  document.getElementById('delivery-info').textContent =
+    total >= 350 ? 'Fri leverans! 🎉' : '<span id="delivery-info">Leveransavgift 49 kr.</span>';
 }
     async function submitOrder() {
       const name = document.getElementById('name').value;
