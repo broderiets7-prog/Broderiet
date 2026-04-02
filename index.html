@@ -189,6 +189,24 @@
       text-transform: uppercase;
       cursor: pointer;
     }
+
+    .order-card {
+      height: 35rem;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    #order-delivery-info {
+      display: flex;
+      align-items: flex-start;
+      height: 3.4rem;
+      overflow: hidden;
+      margin: 1rem 0 0.25rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #3a2e1e;
+    }
+
   </style>
 </head>
 <body>
@@ -234,7 +252,7 @@
 
     <div class="free-delivery">Fri leverans från 350 kr</div>
   
-    <div class="card" style="margin-top: 1.5rem;">
+    <div class="card order-card" style="margin-top: 1.5rem;">
       <div class="section-label">Beställ</div>
 
       <div class="order-row">
@@ -262,7 +280,7 @@
       <input class="field" type="text" id="address" placeholder="Leveransadress">
 
       
-      <p id="order-delivery-info" style="margin: 1rem 0 0.25rem; font-size: 0.85rem; line-height: 1.6; color: #3a2e1e; min-height: 3.2rem;">
+      <p id="order-delivery-info">
         Leveransavgift 49 kr.
       </p>
 
