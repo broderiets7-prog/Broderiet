@@ -100,13 +100,6 @@
       padding-top: 0.1rem;
     }
 
-    .delivery-text {
-      font-size: 0.9rem;
-      line-height: 1.85;
-      color: #2f2418;
-      margin-bottom: 2rem;
-    }
-
     .divider-wrap .divider {
       display: none;
     }
@@ -451,6 +444,66 @@
 
 
 /* === Small alignment tweak for free-delivery badge === */
+
+    /* Refined delivery section */
+    .delivery-box {
+      max-width: 520px;
+      margin: 0 auto 2.1rem;
+      text-align: center;
+    }
+
+    .delivery-main {
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: #1f160d;
+      margin-bottom: 0.45rem;
+    }
+
+    .delivery-sub {
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: #5c4b3b;
+      margin-bottom: 0.95rem;
+    }
+
+    .delivery-meta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #2a1a0f;
+      padding: 0.75rem 1.15rem;
+      border: 1px solid rgba(26,18,8,0.12);
+      background: rgba(255,255,255,0.28);
+    }
+
+    .delivery-meta .dot {
+      opacity: 0.35;
+      letter-spacing: 0;
+    }
+
+    .delivery-meta .free {
+      font-weight: 500;
+    }
+
+    /* Make the order card slightly cleaner */
+    .order-summary {
+      margin: 0.35rem 0 0.9rem;
+    }
+
+    .progress-track {
+      height: 8px;
+    }
+
+    .submit-btn {
+      border-radius: 10px;
+    }
+
 </style>
 </head>
 <body>
@@ -480,7 +533,15 @@
 <div class="product-price">65 kr</div>
 </div>
 <div class="section-label" style="margin-top: 2rem;">Leverans</div>
-<p class="delivery-text">Vi levererar inom Kalmar.<br/>Beställ senast kl. 18:00 för leverans nästkommande dag mellan 06:00–08:00.<br/><br/><span class="delivery-fee">Leveransavgift 49 kr.</span><br/><span class="delivery-highlight">Fri leverans över 350 kr</span></p>
+<div class="delivery-box">
+  <p class="delivery-main">Färskt bröd levererat till din dörr i Kalmar.</p>
+  <p class="delivery-sub">Beställ senast kl. 18:00 för leverans nästkommande dag mellan 06:00–08:00.</p>
+  <div class="delivery-meta">
+    <span>Leverans 49 kr</span>
+    <span class="dot">•</span>
+    <span class="free">Fri leverans över 350 kr</span>
+  </div>
+</div>
 <div class="card order-card" style="margin-top: 1.5rem;">
 <div class="section-label">Beställ</div>
 <div class="order-row">
