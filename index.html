@@ -261,6 +261,11 @@
       <input class="field" type="tel" id="phone" placeholder="Telefonnummer">
       <input class="field" type="text" id="address" placeholder="Leveransadress">
 
+      
+      <p id="order-delivery-info" style="margin: 1rem 0 0.25rem; font-size: 0.85rem; line-height: 1.6; color: #3a2e1e;">
+        Leveransavgift 49 kr.
+      </p>
+
       <button class="submit-btn" onclick="submitOrder()">Skicka beställning</button>
       <p id="msg" style="margin-top:0.75rem; font-size:0.85rem; text-align:center;"></p>
     </div>
@@ -276,9 +281,16 @@ function change(id, delta) {
     parseInt(document.getElementById('ciabattini').textContent) * 52 +
     parseInt(document.getElementById('frallor').textContent) * 65;
 
-  document.getElementById('order-delivery-info').textContent =
-    total >= 350 ? 'Fri leverans! 🎉' : 'Leveransavgift 49 kr.';
+  const deliveryEl = document.getElementById('order-delivery-info');
+  if (deliveryEl) {
+    deliveryEl.textContent =
+      total >= 350 ? 'Fri leverans! 🎉' : `Leveransavgift 49 kr. Du har ${350 - total} kr kvar till fri leverans.`;
+  }
 }
+    document.addEventListener('DOMContentLoaded', () => {
+      change('ciabattini', 0);
+    });
+
     async function submitOrder() {
       const name = document.getElementById('name').value;
       const phone = document.getElementById('phone').value;
