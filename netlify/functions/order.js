@@ -105,9 +105,7 @@ exports.handler = async (event) => {
         <ul>${itemListAdmin}</ul>
 
         <p><strong>Varor:</strong> ${productTotal} kr</p>
-        <p><strong>Leverans:</strong> ${
-          deliveryFee === 0 ? "Fri leverans" : `${deliveryFee} kr`
-        }</p>
+        <p><strong>Leverans:</strong> ${deliveryFee === 0 ? "Fri leverans" : `${deliveryFee} kr`}</p>
         <p><strong>Totalt:</strong> ${finalTotal} kr</p>
       `,
     });
@@ -122,20 +120,102 @@ exports.handler = async (event) => {
 
             <div style="padding:28px 28px 22px; text-align:center; border-bottom:1px solid rgba(26,18,8,0.06); background:#fbf8f4;">
               <img src="https://broderiets.se/broderiet.png" alt="Bröderiet" style="width:88px; margin:0 auto 14px; display:block;">
-              <h1 style="margin:0; font-size:26px; font-weight:600;">
+              <p style="margin:0 0 8px; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#8a7968;">
+                Orderbekräftelse
+              </p>
+              <h1 style="margin:0; font-size:28px; line-height:1.2; font-weight:600; color:#1a1208;">
                 Vi har tagit emot din beställning 🥐
               </h1>
+              <p style="margin:12px 0 0; font-size:16px; line-height:1.6; color:#5c4b3b;">
+                Hej ${name}, vi börjar förbereda din beställning direkt.
+              </p>
             </div>
 
             <div style="padding:28px;">
-              <p>Vi levererar din beställning ungefär kl. ${deliveryTime}.</p>
+              <div style="margin-bottom:24px; padding:18px 18px; background:#f9f6f1; border-radius:14px;">
+                <p style="margin:0 0 8px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#8a7968;">
+                  Leverans
+                </p>
+                <p style="margin:0; font-size:16px; line-height:1.7; color:#2a1a0f;">
+                  Vi levererar inom Kalmar.<br>
+                  Vi levererar din beställning ungefär kl. ${deliveryTime}.
+                </p>
+              </div>
 
-              <p><strong>Varor:</strong> ${productTotal} kr</p>
-              <p><strong>Leverans:</strong> ${
-                deliveryFee === 0 ? "Fri leverans" : `${deliveryFee} kr`
-              }</p>
-              <p><strong>Totalt:</strong> ${finalTotal} kr</p>
+              <div style="margin-bottom:24px;">
+                <p style="margin:0 0 14px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#8a7968;">
+                  Din beställning
+                </p>
+
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                  ${itemListCustomer}
+                </table>
+
+                <div style="margin-top:16px; padding-top:16px; border-top:1px solid rgba(26,18,8,0.08);">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="font-size:15px; color:#5c4b3b;">Varor:</span>
+                    <span style="font-size:15px; color:#2a1a0f;">${productTotal} kr</span>
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="font-size:15px; color:#5c4b3b;">Leverans:</span>
+                    <span style="font-size:15px; color:#2a1a0f;">
+                      ${
+                        deliveryFee === 0
+                          ? "Fri leverans"
+                          : `${deliveryFee} kr`
+                      }
+                    </span>
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid rgba(26,18,8,0.08);">
+                    <span style="font-size:17px; font-weight:600; color:#1a1208;">Totalt:</span>
+                    <span style="font-size:17px; font-weight:600; color:#1a1208;">${finalTotal} kr</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-bottom:24px; padding:18px 18px; background:#fcfaf7; border:1px solid rgba(26,18,8,0.06); border-radius:14px;">
+                <p style="margin:0 0 8px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#8a7968;">
+                  Leveransadress
+                </p>
+                <p style="margin:0; font-size:16px; line-height:1.6; color:#2a1a0f;">
+                  ${address}
+                </p>
+              </div>
+
+              ${
+                deliveryFee === 0
+                  ? `
+                <div style="margin-bottom:24px; padding:14px 16px; background:#eef6ee; border:1px solid rgba(47,125,50,0.12); border-radius:14px; text-align:center;">
+                  <p style="margin:0; font-size:14px; line-height:1.6; color:#2f7d32; font-weight:600;">
+                    Du har fri leverans på denna beställning.
+                  </p>
+                </div>
+              `
+                  : `
+                <div style="margin-bottom:24px; padding:14px 16px; background:#f9f6f1; border-radius:14px; text-align:center;">
+                  <p style="margin:0; font-size:14px; line-height:1.6; color:#5c4b3b;">
+                    Leveransavgift 49 kr tillkommer på beställningar under 350 kr.
+                  </p>
+                </div>
+              `
+              }
+
+              <p style="margin:0; font-size:15px; line-height:1.7; color:#5c4b3b; text-align:center;">
+                Har du frågor? Svara då på detta mail.
+              </p>
             </div>
+
+            <div style="padding:18px 28px 26px; text-align:center; border-top:1px solid rgba(26,18,8,0.06); background:#fbf8f4;">
+              <p style="margin:0; font-size:14px; line-height:1.6; color:#1a1208; font-weight:500;">
+                Bröderiet
+              </p>
+              <p style="margin:4px 0 0; font-size:13px; line-height:1.6; color:#8a7968;">
+                Hantverksbageri
+              </p>
+            </div>
+
           </div>
         </div>
       `,
