@@ -12,7 +12,7 @@ exports.handler = async (event) => {
 
   const payload = JSON.stringify({
     from: "Bröderiet <order@broderiets.se>",
-    to: "order@broderiets.se",
+    to: "broderiets7@gmail.com",
     subject: `Ny beställning från ${name}`,
     html: `
       <h2>Ny beställning</h2>
