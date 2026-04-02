@@ -18,6 +18,7 @@ exports.handler = async (event) => {
       <h2>Ny beställning</h2>
       <p><strong>Namn:</strong> ${name}</p>
       <p><strong>Telefon:</strong> ${phone}</p>
+      <p><strong>Adress:</strong> ${email}</p>
       <p><strong>Adress:</strong> ${address}</p>
       <h3>Produkter:</h3>
       <ul>${itemList}</ul>
