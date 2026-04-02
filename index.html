@@ -100,6 +100,27 @@
       padding-top: 0.1rem;
     }
 
+    .delivery-text {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: #2f2418;
+      margin-bottom: 2rem;
+    }
+
+    .free-delivery {
+      display: inline-block;
+      background: #1a1208;
+      color: #f0e8d8;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      margin-top: 0.5rem;
+    }
+
+    
     .divider-wrap .divider {
       display: none;
     }
@@ -340,6 +361,14 @@
       margin-bottom: 1rem;
     }
 
+    .delivery-note {
+      background: rgba(255,255,255,0.42);
+      border: 1px solid rgba(26,18,8,0.08);
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
+    }
+
+  
     .order-form-stack {
       display: block;
       width: 100%;
@@ -444,64 +473,20 @@
 
 
 /* === Small alignment tweak for free-delivery badge === */
+.free-delivery {
+  margin-left: 20px !important;
+}
 
-    /* Refined delivery section */
-    .delivery-box {
-      max-width: 520px;
-      margin: 0 auto 2.1rem;
-      text-align: center;
-    }
-
-    .delivery-main {
-      font-size: 1.02rem;
-      line-height: 1.75;
-      color: #1f160d;
-      margin-bottom: 0.45rem;
-    }
-
-    .delivery-sub {
-      font-size: 0.92rem;
-      line-height: 1.8;
-      color: #5c4b3b;
-      margin-bottom: 0.95rem;
-    }
-
-    .delivery-meta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.55rem;
-      flex-wrap: wrap;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.74rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #2a1a0f;
-      padding: 0.75rem 1.15rem;
-      border: 1px solid rgba(26,18,8,0.12);
-      background: rgba(255,255,255,0.28);
-    }
-
-    .delivery-meta .dot {
-      opacity: 0.35;
-      letter-spacing: 0;
-    }
-
-    .delivery-meta .free {
-      font-weight: 500;
-    }
-
-    /* Make the order card slightly cleaner */
-    .order-summary {
-      margin: 0.35rem 0 0.9rem;
-    }
-
-    .progress-track {
-      height: 8px;
-    }
-
-    .submit-btn {
-      border-radius: 10px;
+    .field-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+      background-image: linear-gradient(45deg, transparent 50%, #6f5c49 50%), linear-gradient(135deg, #6f5c49 50%, transparent 50%);
+      background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 2.6rem;
     }
 
 </style>
@@ -533,15 +518,8 @@
 <div class="product-price">65 kr</div>
 </div>
 <div class="section-label" style="margin-top: 2rem;">Leverans</div>
-<div class="delivery-box">
-  <p class="delivery-main">Färskt bröd levererat till din dörr i Kalmar.</p>
-  <p class="delivery-sub">Beställ senast kl. 18:00 för leverans nästkommande dag mellan 06:00–08:00.</p>
-  <div class="delivery-meta">
-    <span>Leverans 49 kr</span>
-    <span class="dot">•</span>
-    <span class="free">Fri leverans över 350 kr</span>
-  </div>
-</div>
+<p class="delivery-text delivery-note">Vi levererar inom Kalmar. Beställ senast kl. 18:00<br/>och välj en leveranstid mellan 06:00–08:00 nästkommande dag.<br/><br/>Leveransavgift 49 kr.</p>
+<div class="free-delivery">Fri leverans över 350 kr</div>
 <div class="card order-card" style="margin-top: 1.5rem;">
 <div class="section-label">Beställ</div>
 <div class="order-row">
@@ -589,6 +567,17 @@
 <div class="field-group">
 <label class="field-label" for="address">Leveransadress</label>
 <input class="field" id="address" placeholder="Leveransadress" type="text"/>
+</div>
+<div class="field-group">
+<label class="field-label" for="deliveryTime">Önskad leveranstid</label>
+<select class="field field-select" id="deliveryTime">
+<option value="">Välj tid</option>
+<option value="06:00">06:00</option>
+<option value="06:30">06:30</option>
+<option value="07:00">07:00</option>
+<option value="07:30">07:30</option>
+<option value="08:00">08:00</option>
+</select>
 </div>
 <p id="order-delivery-info">49 kr frakt • 350 kr kvar till fri leverans</p>
 <p id="msg" style="margin-top:0.75rem; font-size:0.85rem; text-align:center; min-height:1.2rem;"></p><button class="submit-btn" onclick="submitOrder()">Skicka beställning</button>
@@ -662,6 +651,7 @@
       const emailEl = document.getElementById('email');
       const email = emailEl ? emailEl.value.trim() : '';
       const address = document.getElementById('address').value.trim();
+      const deliveryTime = document.getElementById('deliveryTime').value.trim();
       const msg = document.getElementById('msg');
 
       if (msg) {
@@ -669,9 +659,9 @@
         msg.className = '';
       }
 
-      if (!name || !phone || !email || !address) {
+      if (!name || !phone || !email || !address || !deliveryTime) {
         if (msg) {
-          msg.textContent = 'Fyll i namn, telefonnummer, mailadress och leveransadress.';
+          msg.textContent = 'Fyll i namn, telefonnummer, mailadress, leveransadress och önskad leveranstid.';
           msg.className = 'error';
         }
         return;
@@ -699,7 +689,7 @@
         const res = await fetch('/.netlify/functions/order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone, email, address, items }),
+          body: JSON.stringify({ name, phone, email, address, deliveryTime, items }),
         });
 
         if (msg) {
