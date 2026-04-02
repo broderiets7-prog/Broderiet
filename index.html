@@ -194,17 +194,31 @@
       height: 35rem;
       box-sizing: border-box;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     #order-delivery-info {
-      display: flex;
-      align-items: flex-start;
-      height: 3.4rem;
+      display: block;
+      height: 3.8rem;
+      min-height: 3.8rem;
+      max-height: 3.8rem;
       overflow: hidden;
-      margin: 1rem 0 0.25rem;
+      margin: 1rem 0 0;
       font-size: 0.85rem;
-      line-height: 1.6;
+      line-height: 1.4;
       color: #3a2e1e;
+      flex-shrink: 0;
+    }
+
+    .order-card .submit-btn {
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+
+    .order-card #msg {
+      min-height: 1.2rem;
+      flex-shrink: 0;
     }
 
   </style>
@@ -285,7 +299,7 @@
       </p>
 
       <button class="submit-btn" onclick="submitOrder()">Skicka beställning</button>
-      <p id="msg" style="margin-top:0.75rem; font-size:0.85rem; text-align:center;"></p>
+      <p id="msg" style="margin-top:0.75rem; font-size:0.85rem; text-align:center; min-height:1.2rem;"></p>
     </div>
   </div>
 
