@@ -316,16 +316,19 @@
     const prices = { ciabattini: 52, frallor: 65 };
 function change(id, delta) {
   const el = document.getElementById(id);
-  el.textContent = Math.max(0, parseInt(el.textContent) + delta);
+  const current = parseInt(el.textContent, 10) || 0;
+  el.textContent = Math.max(0, current + delta);
 
   const total =
-    parseInt(document.getElementById('ciabattini').textContent) * 52 +
-    parseInt(document.getElementById('frallor').textContent) * 65;
+    (parseInt(document.getElementById('ciabattini').textContent, 10) || 0) * 52 +
+    (parseInt(document.getElementById('frallor').textContent, 10) || 0) * 65;
 
   const deliveryEl = document.getElementById('order-delivery-info');
   if (deliveryEl) {
     deliveryEl.textContent =
-      total >= 350 ? 'Fri leverans! 🎉' : ``49 kr frakt • ${350 - total} kr kvar till fri leverans till fri leverans`;
+      total >= 350
+        ? 'Fri leverans! 🎉'
+        : `${49} kr frakt • ${350 - total} kr kvar till fri leverans`;
   }
 }
     document.addEventListener('DOMContentLoaded', () => {
