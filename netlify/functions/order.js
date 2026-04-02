@@ -139,8 +139,8 @@ exports.handler = async (event) => {
                   Order
                 </p>
                 <p style="margin:0; font-size:16px; line-height:1.7; color:#2a1a0f;">
-                  Stort tack för förtroendet. Det betyder mycket för oss.<br>
-                  Vi levererar din beställning ungefär kl. ${deliveryTime}.
+                  Stort tack för din beställning.<br>
+                  Vi levererar ditt bröd ungefär kl. ${deliveryTime}.
                 </p>
               </div>
 
