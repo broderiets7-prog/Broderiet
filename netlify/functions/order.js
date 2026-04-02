@@ -73,7 +73,6 @@ exports.handler = async (event) => {
       )
       .join("");
 
-    // 📩 ADMIN MAIL
     const adminPayload = JSON.stringify({
       from: "Bröderiet <order@broderiets.se>",
       to: "order@broderiets.se",
@@ -90,58 +89,57 @@ exports.handler = async (event) => {
       `,
     });
 
-    // 📧 CUSTOMER MAIL
     const customerPayload = JSON.stringify({
       from: "Bröderiet <order@broderiets.se>",
       to: email,
       subject: "Vi har tagit emot din beställning 🥐",
       html: `
-        <div style="font-family: Georgia, serif; background:#f6f0e8; padding:40px 20px;">
-          <div style="max-width:520px; margin:0 auto; background:#ffffff; padding:32px 28px; border-radius:16px; border:1px solid rgba(0,0,0,0.05); text-align:center;">
+        <div style="margin:0; padding:24px 12px; background:#f6f0e8; font-family: Georgia, serif;">
+          <div style="max-width:520px; margin:0 auto; background:#ffffff; padding:24px 20px; border-radius:16px; border:1px solid rgba(0,0,0,0.05); text-align:center; box-sizing:border-box;">
 
-            <img src="https://broderiets.se/broderiet.png" alt="Bröderiet" style="width:110px; margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;">
+            <img src="https://broderiets.se/broderiet.png" alt="Bröderiet" style="width:96px; margin:0 auto 16px; display:block;">
 
-            <h2 style="margin:0 0 16px; font-size:22px; color:#1a1208;">
+            <h2 style="margin:0 0 12px; font-size:20px; line-height:1.25; color:#1a1208;">
               Tack för din beställning, ${name}!
             </h2>
 
-            <p style="margin:0 0 18px; font-size:15px; line-height:1.6; color:#3a2e1e;">
+            <p style="margin:0 0 16px; font-size:15px; line-height:1.55; color:#3a2e1e;">
               Vi har tagit emot din beställning och börjar förbereda den direkt.
             </p>
 
-            <div style="margin:24px 0; padding:18px; background:#f9f6f1; border-radius:12px; text-align:left;">
-              <h3 style="margin:0 0 12px; font-size:15px; letter-spacing:0.05em; text-transform:uppercase; color:#6f655b;">
+            <div style="margin:20px 0; padding:16px; background:#f9f6f1; border-radius:12px; text-align:left;">
+              <h3 style="margin:0 0 10px; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#6f655b;">
                 Din beställning
               </h3>
 
-              <ul style="padding-left:18px; margin:0 0 12px; color:#2a1a0f;">
+              <ul style="padding-left:18px; margin:0 0 10px; color:#2a1a0f; font-size:15px; line-height:1.5;">
                 ${itemListCustomer}
               </ul>
 
-              <p style="margin:8px 0 0; font-size:15px; color:#1a1208;">
+              <p style="margin:6px 0 0; font-size:15px; color:#1a1208;">
                 <strong>Totalt:</strong> ${total} kr
               </p>
             </div>
 
-            <div style="margin:20px 0; text-align:left;">
-              <p style="margin:0; font-size:14px; color:#3a2e1e;">
+            <div style="margin:18px 0; text-align:left;">
+              <p style="margin:0; font-size:15px; line-height:1.5; color:#3a2e1e;">
                 <strong>Leveransadress:</strong><br>
                 ${address}
               </p>
             </div>
 
-            <div style="margin:24px 0; padding:16px; background:#f3efe9; border-radius:12px;">
-              <p style="margin:0; font-size:14px; line-height:1.6; color:#3a2e1e;">
+            <div style="margin:20px 0; padding:14px 16px; background:#f3efe9; border-radius:12px;">
+              <p style="margin:0; font-size:15px; line-height:1.55; color:#3a2e1e;">
                 Leverans sker inom Kalmar.<br>
                 Beställ senast kl. 18:00 för leverans mellan 06:00–08:00.
               </p>
             </div>
 
-            <p style="margin:24px 0 0; font-size:14px; color:#5a4a39;">
-              Har du frågor? Svara på detta mail eller kontakta oss direkt.
+            <p style="margin:20px 0 0; font-size:15px; line-height:1.5; color:#5a4a39;">
+              Har du frågor? Svara då på detta mail.
             </p>
 
-            <p style="margin:12px 0 0; font-size:14px; color:#1a1208;">
+            <p style="margin:12px 0 0; font-size:14px; line-height:1.5; color:#1a1208;">
               Med vänliga hälsningar,<br>
               <span style="white-space:nowrap;">Bröderiet</span>
             </p>
