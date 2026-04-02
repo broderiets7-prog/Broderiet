@@ -213,7 +213,7 @@
       overflow: hidden !important;
       white-space: nowrap !important;
       text-overflow: ellipsis !important;
-      margin: 16px 0 0 0 !important;
+      margin: 10px 0 0 0 !important;
       font-size: 13px !important;
       line-height: 1.2 !important;
       color: #2f2418 !important;
@@ -331,7 +331,7 @@
   
     .field-label {
       display: block;
-      margin: 0.9rem 0 0.45rem;
+      margin: 0.7rem 0 0.35rem;
       font-family: 'Jost', sans-serif;
       font-size: 0.82rem;
       font-weight: 500;
@@ -349,7 +349,7 @@
     }
 
     .card.order-card {
-      padding-bottom: 2rem !important;
+      padding-bottom: 1.5rem !important;
     }
 
     .order-sub {
@@ -366,6 +366,28 @@
       padding: 1rem 1.1rem;
     }
 
+  
+    .order-form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .order-form-stack .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .order-form-stack .submit-btn {
+      margin-top: 0.35rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .card.order-card {
+      padding-bottom: 1.5rem !important;
+    }
   </style>
 </head>
 <body>
@@ -449,13 +471,20 @@
         </div>
       </div>
 
+      <div class="order-form-stack">
+      <div class="field-group">
       <label class="field-label" for="name">Namn</label>
       <input class="field" type="text" id="name" placeholder="Namn">
+      </div>
+      <div class="field-group">
       <label class="field-label" for="phone">Telefonnummer</label>
       <input class="field" type="tel" id="phone" placeholder="Telefonnummer">
+      </div>
 
+      <div class="field-group">
       <label class="field-label" for="email">Mailadress</label>
       <input class="field" type="email" id="email" placeholder="Mailadress">
+      </div>
 
       <input class="field" type="text" id="address" placeholder="Leveransadress">
 
@@ -465,6 +494,7 @@
       </p>
 
       <button class="submit-btn" onclick="submitOrder()">Skicka beställning</button>
+    </div>
       <p id="msg" style="margin-top:0.75rem; font-size:0.85rem; text-align:center; min-height:1.2rem;"></p>
     </div>
   </div>
