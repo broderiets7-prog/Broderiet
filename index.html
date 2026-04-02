@@ -199,28 +199,31 @@
       max-height: none !important;
       box-sizing: border-box !important;
       overflow: visible !important;
-      display: flex !important;
-      flex-direction: column !important;
+      display: block !important;
     }
 
     #order-delivery-info {
-      display: block !important;
-      height: 54px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 100% !important;
       min-height: 54px !important;
       max-height: 54px !important;
+      padding: 0 14px !important;
       overflow: hidden !important;
       white-space: nowrap !important;
       text-overflow: ellipsis !important;
       margin: 16px 0 0 0 !important;
       font-size: 13px !important;
-      line-height: 54px !important;
-      color: #3a2e1e !important;
-      flex: 0 0 54px !important;
+      line-height: 1.2 !important;
+      color: #2f2418 !important;
+      box-sizing: border-box !important;
     }
 
     .order-card .submit-btn {
       margin-top: 1rem !important;
-      flex: 0 0 auto !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     .order-card #msg {
@@ -310,6 +313,9 @@
       color: #2f7d32 !important;
       box-shadow: inset 0 0 0 1px rgba(47, 125, 50, 0.16);
       font-weight: 600;
+      border-radius: 12px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .order-card.flash-free {
@@ -325,7 +331,7 @@
   
     .field-label {
       display: block;
-      margin: 0.8rem 0 0.45rem;
+      margin: 0.9rem 0 0.45rem;
       font-family: 'Jost', sans-serif;
       font-size: 0.82rem;
       font-weight: 500;
@@ -343,7 +349,7 @@
     }
 
     .card.order-card {
-      padding-bottom: 1.8rem !important;
+      padding-bottom: 2rem !important;
     }
 
     .order-sub {
