@@ -229,7 +229,7 @@
 <p class="delivery-text">
       Vi levererar inom Kalmar. Beställ senast kl. 18:00<br>
       och välj en leveranstid mellan 06:00–08:00.<br><br>
-      <span id="delivery-info">Leveransavgift 49 kr.</span>
+      Leveransavgift 49 kr.
     </p>
 
     <div class="free-delivery">Fri leverans från 350 kr</div>
@@ -276,8 +276,8 @@ function change(id, delta) {
     parseInt(document.getElementById('ciabattini').textContent) * 52 +
     parseInt(document.getElementById('frallor').textContent) * 65;
 
-  document.getElementById('delivery-info').textContent =
-    total >= 350 ? 'Fri leverans! 🎉' : '<span id="delivery-info">Leveransavgift 49 kr.</span>';
+  document.getElementById('order-delivery-info').textContent =
+    total >= 350 ? 'Fri leverans! 🎉' : 'Leveransavgift 49 kr.';
 }
     async function submitOrder() {
       const name = document.getElementById('name').value;
