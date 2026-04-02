@@ -42,13 +42,14 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { name, phone, email, items, address } = JSON.parse(event.body);
+    const { name, phone, email, items, address, deliveryTime } = JSON.parse(event.body);
 
     if (
       !name ||
       !phone ||
       !email ||
       !address ||
+      !deliveryTime ||
       !Array.isArray(items) ||
       items.length === 0
     ) {
@@ -98,6 +99,7 @@ exports.handler = async (event) => {
         <p><strong>Telefon:</strong> ${phone}</p>
         <p><strong>Mailadress:</strong> ${email}</p>
         <p><strong>Adress:</strong> ${address}</p>
+        <p><strong>Önskad leveranstid:</strong> ungefär kl. ${deliveryTime}</p>
 
         <h3>Produkter:</h3>
         <ul>${itemListAdmin}</ul>
@@ -113,7 +115,7 @@ exports.handler = async (event) => {
     const customerPayload = JSON.stringify({
       from: "Bröderiet <order@broderiets.se>",
       to: email,
-      subject: "Din beställning hos Bröderiet",
+      subject: "Vi har tagit emot din beställning 🥐",
       html: `
         <div style="margin:0; padding:32px 14px; background:#f6f0e8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
           <div style="max-width:560px; margin:0 auto; background:#ffffff; border:1px solid rgba(26,18,8,0.06); border-radius:18px; overflow:hidden;">
@@ -124,10 +126,10 @@ exports.handler = async (event) => {
                 Orderbekräftelse
               </p>
               <h1 style="margin:0; font-size:28px; line-height:1.2; font-weight:600; color:#1a1208;">
-                Tack för din beställning
+                Vi har tagit emot din beställning 🥐
               </h1>
               <p style="margin:12px 0 0; font-size:16px; line-height:1.6; color:#5c4b3b;">
-                Hej ${name}, vi har tagit emot din beställning och börjar förbereda den direkt.
+                Hej ${name}, vi börjar förbereda din beställning direkt.
               </p>
             </div>
 
@@ -138,7 +140,7 @@ exports.handler = async (event) => {
                 </p>
                 <p style="margin:0; font-size:16px; line-height:1.7; color:#2a1a0f;">
                   Vi levererar inom Kalmar.<br>
-                  Beställningar lagda före kl. 18:00 levereras nästkommande dag mellan 06:00–08:00.
+                  Vi levererar din beställning ungefär kl. ${deliveryTime}.
                 </p>
               </div>
 
@@ -153,12 +155,12 @@ exports.handler = async (event) => {
 
                 <div style="margin-top:16px; padding-top:16px; border-top:1px solid rgba(26,18,8,0.08);">
                   <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <span style="font-size:15px; color:#5c4b3b;">Varor</span>
+                    <span style="font-size:15px; color:#5c4b3b;">Varor:</span>
                     <span style="font-size:15px; color:#2a1a0f;">${productTotal} kr</span>
                   </div>
 
                   <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <span style="font-size:15px; color:#5c4b3b;">Leverans</span>
+                    <span style="font-size:15px; color:#5c4b3b;">Leverans:</span>
                     <span style="font-size:15px; color:#2a1a0f;">
                       ${
                         deliveryFee === 0
@@ -169,7 +171,7 @@ exports.handler = async (event) => {
                   </div>
 
                   <div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid rgba(26,18,8,0.08);">
-                    <span style="font-size:17px; font-weight:600; color:#1a1208;">Totalt</span>
+                    <span style="font-size:17px; font-weight:600; color:#1a1208;">Totalt:</span>
                     <span style="font-size:17px; font-weight:600; color:#1a1208;">${finalTotal} kr</span>
                   </div>
                 </div>
