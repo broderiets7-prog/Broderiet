@@ -136,10 +136,10 @@ exports.handler = async (event) => {
             <div style="padding:28px;">
               <div style="margin-bottom:24px; padding:18px 18px; background:#f9f6f1; border-radius:14px;">
                 <p style="margin:0 0 8px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#8a7968;">
-                  Leverans
+                  Order
                 </p>
                 <p style="margin:0; font-size:16px; line-height:1.7; color:#2a1a0f;">
-                  Vi levererar inom Kalmar.<br>
+                  Stort tack för förtroendet. Det betyder mycket för oss.<br>
                   Vi levererar din beställning ungefär kl. ${deliveryTime}.
                 </p>
               </div>
