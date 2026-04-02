@@ -22,7 +22,7 @@ function sendEmail(payload) {
 
         res.on("end", () => {
           if (res.statusCode === 200 || res.statusCode === 201) {
-            resolve({ ok: true, data });
+            resolve({ ok: true });
           } else {
             reject(new Error(`Resend error: ${data}`));
           }
@@ -58,13 +58,22 @@ exports.handler = async (event) => {
     const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
     const itemListAdmin = items
-      .map((item) => `<li>${item.name} x${item.qty} — ${item.price * item.qty} kr</li>`)
+      .map(
+        (item) =>
+          `<li>${item.name} x${item.qty} — ${item.price * item.qty} kr</li>`
+      )
       .join("");
 
     const itemListCustomer = items
-      .map((item) => `<li style="margin-bottom:6px;">${item.name} x${item.qty} — ${item.price * item.qty} kr</li>`)
+      .map(
+        (item) =>
+          `<li style="margin-bottom:6px;">${item.name} x${item.qty} — ${
+            item.price * item.qty
+          } kr</li>`
+      )
       .join("");
 
+    // 📩 ADMIN MAIL
     const adminPayload = JSON.stringify({
       from: "Bröderiet <order@broderiets.se>",
       to: "order@broderiets.se",
@@ -81,6 +90,7 @@ exports.handler = async (event) => {
       `,
     });
 
+    // 📧 CUSTOMER MAIL
     const customerPayload = JSON.stringify({
       from: "Bröderiet <order@broderiets.se>",
       to: email,
@@ -89,7 +99,7 @@ exports.handler = async (event) => {
         <div style="font-family: Georgia, serif; background:#f6f0e8; padding:40px 20px;">
           <div style="max-width:520px; margin:0 auto; background:#ffffff; padding:32px 28px; border-radius:16px; border:1px solid rgba(0,0,0,0.05); text-align:center;">
 
-            <img src="https://broderiets.se/broderiet.png" alt="Bröderiet" style="width:110px; margin-bottom:20px;">
+            <img src="https://broderiets.se/broderiet.png" alt="Bröderiet" style="width:110px; margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;">
 
             <h2 style="margin:0 0 16px; font-size:22px; color:#1a1208;">
               Tack för din beställning, ${name}!
@@ -132,7 +142,8 @@ exports.handler = async (event) => {
             </p>
 
             <p style="margin:12px 0 0; font-size:14px; color:#1a1208;">
-              / Bröderiet
+              Med vänliga hälsningar,<br>
+              <span style="white-space:nowrap;">Bröderiet</span>
             </p>
 
           </div>
