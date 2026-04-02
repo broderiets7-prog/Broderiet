@@ -190,35 +190,44 @@
       cursor: pointer;
     }
 
+    
+
+  
     .order-card {
-      height: 35rem;
-      box-sizing: border-box;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      height: 560px !important;
+      min-height: 560px !important;
+      max-height: 560px !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
     }
 
     #order-delivery-info {
-      display: block;
-      height: 3.8rem;
-      min-height: 3.8rem;
-      max-height: 3.8rem;
-      overflow: hidden;
-      margin: 1rem 0 0;
-      font-size: 0.85rem;
-      line-height: 1.4;
-      color: #3a2e1e;
-      flex-shrink: 0;
+      display: block !important;
+      height: 54px !important;
+      min-height: 54px !important;
+      max-height: 54px !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
+      text-overflow: ellipsis !important;
+      margin: 16px 0 0 0 !important;
+      font-size: 13px !important;
+      line-height: 54px !important;
+      color: #3a2e1e !important;
+      flex: 0 0 54px !important;
     }
 
     .order-card .submit-btn {
-      margin-top: auto;
-      flex-shrink: 0;
+      margin-top: auto !important;
+      flex: 0 0 auto !important;
     }
 
     .order-card #msg {
-      min-height: 1.2rem;
-      flex-shrink: 0;
+      min-height: 20px !important;
+      max-height: 20px !important;
+      overflow: hidden !important;
+      flex: 0 0 20px !important;
     }
 
   </style>
@@ -316,7 +325,7 @@ function change(id, delta) {
   const deliveryEl = document.getElementById('order-delivery-info');
   if (deliveryEl) {
     deliveryEl.textContent =
-      total >= 350 ? 'Fri leverans! 🎉' : `Leveransavgift 49 kr. Du har ${350 - total} kr kvar till fri leverans.`;
+      total >= 350 ? 'Fri leverans! 🎉' : `49 kr frakt • ${350 - total} kr kvar`;
   }
 }
     document.addEventListener('DOMContentLoaded', () => {
