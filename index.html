@@ -213,11 +213,12 @@
       overflow: hidden !important;
       white-space: nowrap !important;
       text-overflow: ellipsis !important;
-      margin: 10px 0 0 0 !important;
+      margin: 0.4rem 0 0 0 !important;
       font-size: 13px !important;
       line-height: 1.2 !important;
       color: #2f2418 !important;
       box-sizing: border-box !important;
+      position: static !important;
     }
 
     .order-card .submit-btn {
@@ -368,19 +369,18 @@
 
   
     .order-form-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
+      display: block;
+      width: 100%;
     }
 
     .order-form-stack .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
+      display: block;
+      width: 100%;
+      margin-bottom: 0.9rem;
     }
 
     .order-form-stack .submit-btn {
-      margin-top: 0.35rem !important;
+      margin-top: 0.8rem !important;
       width: 100% !important;
       box-sizing: border-box !important;
     }
@@ -471,30 +471,33 @@
         </div>
       </div>
 
-      <div class="order-form-stack">
-      <div class="field-group">
-      <label class="field-label" for="name">Namn</label>
-      <input class="field" type="text" id="name" placeholder="Namn">
-      </div>
-      <div class="field-group">
-      <label class="field-label" for="phone">Telefonnummer</label>
-      <input class="field" type="tel" id="phone" placeholder="Telefonnummer">
-      </div>
-
-      <div class="field-group">
-      <label class="field-label" for="email">Mailadress</label>
-      <input class="field" type="email" id="email" placeholder="Mailadress">
-      </div>
-
-      <input class="field" type="text" id="address" placeholder="Leveransadress">
-
       
-      <p id="order-delivery-info">
-        Leveransavgift 49 kr.
-      </p>
+<div class="order-form-stack">
+      <div class="field-group">
+        <label class="field-label" for="name">Namn</label>
+        <input class="field" type="text" id="name" placeholder="Namn">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="phone">Telefonnummer</label>
+        <input class="field" type="tel" id="phone" placeholder="Telefonnummer">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="email">Mailadress</label>
+        <input class="field" type="email" id="email" placeholder="Mailadress">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="address">Leveransadress</label>
+        <input class="field" type="text" id="address" placeholder="Leveransadress">
+      </div>
+
+      <p id="order-delivery-info">49 kr frakt • 350 kr kvar till fri leverans</p>
 
       <button class="submit-btn" onclick="submitOrder()">Skicka beställning</button>
     </div>
+
       <p id="msg" style="margin-top:0.75rem; font-size:0.85rem; text-align:center; min-height:1.2rem;"></p>
     </div>
   </div>
