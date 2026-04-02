@@ -63,14 +63,31 @@ exports.handler = async (event) => {
     const deliveryFee = productTotal >= 350 ? 0 : 49;
     const finalTotal = productTotal + deliveryFee;
 
-    const itemList = items
+    const itemListAdmin = items
       .map(
         (item) =>
           `<li>${item.name} x${item.qty} — ${item.price * item.qty} kr</li>`
       )
       .join("");
 
-    // 📩 ADMIN MAIL
+    const itemListCustomer = items
+      .map(
+        (item) => `
+          <tr>
+            <td style="padding: 8px 0; font-size: 15px; color: #2a1a0f;">
+              ${item.name}
+            </td>
+            <td style="padding: 8px 0; font-size: 15px; color: #5c4b3b; text-align: center;">
+              x${item.qty}
+            </td>
+            <td style="padding: 8px 0; font-size: 15px; color: #2a1a0f; text-align: right;">
+              ${item.price * item.qty} kr
+            </td>
+          </tr>
+        `
+      )
+      .join("");
+
     const adminPayload = JSON.stringify({
       from: "Bröderiet <order@broderiets.se>",
       to: "order@broderiets.se",
@@ -83,59 +100,121 @@ exports.handler = async (event) => {
         <p><strong>Adress:</strong> ${address}</p>
 
         <h3>Produkter:</h3>
-        <ul>${itemList}</ul>
+        <ul>${itemListAdmin}</ul>
 
         <p><strong>Varor:</strong> ${productTotal} kr</p>
         <p><strong>Leverans:</strong> ${
-          deliveryFee === 0 ? "Fri leverans" : deliveryFee + " kr"
+          deliveryFee === 0 ? "Fri leverans" : `${deliveryFee} kr`
         }</p>
         <p><strong>Totalt:</strong> ${finalTotal} kr</p>
       `,
     });
 
-    // 📧 CUSTOMER MAIL
     const customerPayload = JSON.stringify({
       from: "Bröderiet <order@broderiets.se>",
       to: email,
-      subject: "Vi har tagit emot din beställning 🥐",
+      subject: "Din beställning hos Bröderiet",
       html: `
-        <div style="margin:0; padding:24px 12px; background:#f6f0e8; font-family: Georgia, serif;">
-          <div style="max-width:520px; margin:0 auto; background:#ffffff; padding:24px 20px; border-radius:16px; border:1px solid rgba(0,0,0,0.05); text-align:center;">
+        <div style="margin:0; padding:32px 14px; background:#f6f0e8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+          <div style="max-width:560px; margin:0 auto; background:#ffffff; border:1px solid rgba(26,18,8,0.06); border-radius:18px; overflow:hidden;">
 
-            <img src="https://broderiets.se/broderiet.png" style="width:96px; margin-bottom:16px;">
-
-            <h2 style="margin:0 0 12px; font-size:20px; color:#1a1208;">
-              Tack för din beställning, ${name}!
-            </h2>
-
-            <div style="margin:20px 0; padding:16px; background:#f9f6f1; border-radius:12px; text-align:left;">
-              <ul style="padding-left:18px;">
-                ${itemList}
-              </ul>
-
-              <p><strong>Varor:</strong> ${productTotal} kr</p>
-              <p><strong>Leverans:</strong> ${
-                deliveryFee === 0 ? "Fri leverans 🎉" : deliveryFee + " kr"
-              }</p>
-              <p><strong>Totalt:</strong> ${finalTotal} kr</p>
+            <div style="padding:28px 28px 22px; text-align:center; border-bottom:1px solid rgba(26,18,8,0.06); background:#fbf8f4;">
+              <img src="https://broderiets.se/broderiet.png" alt="Bröderiet" style="width:88px; margin:0 auto 14px; display:block;">
+              <p style="margin:0 0 8px; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#8a7968;">
+                Orderbekräftelse
+              </p>
+              <h1 style="margin:0; font-size:28px; line-height:1.2; font-weight:600; color:#1a1208;">
+                Tack för din beställning
+              </h1>
+              <p style="margin:12px 0 0; font-size:16px; line-height:1.6; color:#5c4b3b;">
+                Hej ${name}, vi har tagit emot din beställning och börjar förbereda den direkt.
+              </p>
             </div>
 
-            <p style="margin-top:20px;">
-              Leveransadress:<br>${address}
-            </p>
+            <div style="padding:28px;">
+              <div style="margin-bottom:24px; padding:18px 18px; background:#f9f6f1; border-radius:14px;">
+                <p style="margin:0 0 8px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#8a7968;">
+                  Leverans
+                </p>
+                <p style="margin:0; font-size:16px; line-height:1.7; color:#2a1a0f;">
+                  Vi levererar inom Kalmar.<br>
+                  Beställningar lagda före kl. 18:00 levereras nästkommande dag mellan 06:00–08:00.
+                </p>
+              </div>
 
-            <p style="margin-top:20px;">
-              Leverans sker mellan 06:00–08:00.
-            </p>
+              <div style="margin-bottom:24px;">
+                <p style="margin:0 0 14px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#8a7968;">
+                  Din beställning
+                </p>
 
-            <p style="margin-top:20px;">
-              Har du frågor? Svara då på detta mail.
-            </p>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                  ${itemListCustomer}
+                </table>
 
-            <p style="margin-top:12px;">
-              Med vänliga hälsningar,<br>
-              <span style="white-space:nowrap;">Bröderiet</span>
-            </p>
+                <div style="margin-top:16px; padding-top:16px; border-top:1px solid rgba(26,18,8,0.08);">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="font-size:15px; color:#5c4b3b;">Varor</span>
+                    <span style="font-size:15px; color:#2a1a0f;">${productTotal} kr</span>
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="font-size:15px; color:#5c4b3b;">Leverans</span>
+                    <span style="font-size:15px; color:#2a1a0f;">
+                      ${
+                        deliveryFee === 0
+                          ? "Fri leverans"
+                          : `${deliveryFee} kr`
+                      }
+                    </span>
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid rgba(26,18,8,0.08);">
+                    <span style="font-size:17px; font-weight:600; color:#1a1208;">Totalt</span>
+                    <span style="font-size:17px; font-weight:600; color:#1a1208;">${finalTotal} kr</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-bottom:24px; padding:18px 18px; background:#fcfaf7; border:1px solid rgba(26,18,8,0.06); border-radius:14px;">
+                <p style="margin:0 0 8px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#8a7968;">
+                  Leveransadress
+                </p>
+                <p style="margin:0; font-size:16px; line-height:1.6; color:#2a1a0f;">
+                  ${address}
+                </p>
+              </div>
+
+              ${
+                deliveryFee === 0
+                  ? `
+                <div style="margin-bottom:24px; padding:14px 16px; background:#eef6ee; border:1px solid rgba(47,125,50,0.12); border-radius:14px; text-align:center;">
+                  <p style="margin:0; font-size:14px; line-height:1.6; color:#2f7d32; font-weight:600;">
+                    Du har fri leverans på denna beställning.
+                  </p>
+                </div>
+              `
+                  : `
+                <div style="margin-bottom:24px; padding:14px 16px; background:#f9f6f1; border-radius:14px; text-align:center;">
+                  <p style="margin:0; font-size:14px; line-height:1.6; color:#5c4b3b;">
+                    Leveransavgift 49 kr tillkommer på beställningar under 350 kr.
+                  </p>
+                </div>
+              `
+              }
+
+              <p style="margin:0; font-size:15px; line-height:1.7; color:#5c4b3b; text-align:center;">
+                Har du frågor? Svara då på detta mail.
+              </p>
+            </div>
+
+            <div style="padding:18px 28px 26px; text-align:center; border-top:1px solid rgba(26,18,8,0.06); background:#fbf8f4;">
+              <p style="margin:0; font-size:14px; line-height:1.6; color:#1a1208; font-weight:500;">
+                Bröderiet
+              </p>
+              <p style="margin:4px 0 0; font-size:13px; line-height:1.6; color:#8a7968;">
+                Hantverksbageri
+              </p>
+            </div>
 
           </div>
         </div>
