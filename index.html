@@ -446,6 +446,30 @@
 #msg{
   display:none !important;
 }
+
+
+/* === JS/UI repair === */
+.progress-fill{
+  width:0%;
+  height:100%;
+  background:#1a1208;
+  border-radius:999px;
+  transition:width 0.25s ease;
+}
+.progress-fill.free-active{
+  background:#2f7d32 !important;
+  box-shadow:0 0 12px rgba(47,125,50,0.28);
+}
+#msg{
+  display:block !important;
+  color:#4f4337;
+}
+#msg.error{
+  color:#8b3a2e;
+}
+#msg.success{
+  color:#2f7d32;
+}
 </style>
 </head>
 <body>
@@ -512,9 +536,6 @@
 <p id="free-delivery-text">350 kr kvar till fri leverans</p>
 </div>
 </div>
-
-
-
 <div class="order-form-stack">
 <div class="field-group">
 <label class="field-label" for="name">Namn</label>
@@ -533,7 +554,7 @@
 <input class="field" id="address" placeholder="Leveransadress" type="text"/>
 </div>
 <p id="order-delivery-info">49 kr frakt • 350 kr kvar till fri leverans</p>
-<button class="submit-btn" onclick="submitOrder()">Skicka beställning</button>
+<p id="msg" style="margin-top:0.75rem; font-size:0.85rem; text-align:center; min-height:1.2rem;"></p><button class="submit-btn" onclick="submitOrder()">Skicka beställning</button>
 </div>
 </div>
 </div>
@@ -551,6 +572,9 @@
 
       const totalEl = document.getElementById('order-total');
       const deliveryEl = document.getElementById('order-delivery-info');
+      const progressEl = document.getElementById('free-delivery-progress');
+      const progressTextEl = document.getElementById('free-delivery-text');
+      const orderCard = document.querySelector('.order-card');
 
       if (totalEl) {
         totalEl.textContent = `${total} kr`;
@@ -596,29 +620,62 @@
     });
 
     async function submitOrder() {
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const address = document.getElementById('address').value;
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const emailEl = document.getElementById('email');
+      const email = emailEl ? emailEl.value.trim() : '';
+      const address = document.getElementById('address').value.trim();
       const msg = document.getElementById('msg');
-      if (!name || !phone || !address) {
-        msg.textContent = 'Fyll i alla fält.';
+
+      if (msg) {
+        msg.textContent = '';
+        msg.className = '';
+      }
+
+      if (!name || !phone || !email || !address) {
+        if (msg) {
+          msg.textContent = 'Fyll i namn, telefonnummer, mailadress och leveransadress.';
+          msg.className = 'error';
+        }
         return;
       }
+
       const items = [
-        { name: 'Ciabattini', qty: parseInt(document.getElementById('ciabattini').textContent), price: 52 },
-        { name: 'Ljusa Frallor', qty: parseInt(document.getElementById('frallor').textContent), price: 65 },
+        { name: 'Ciabattini', qty: getQty('ciabattini'), price: 52 },
+        { name: 'Ljusa Frallor', qty: getQty('frallor'), price: 65 },
       ].filter(i => i.qty > 0);
+
       if (!items.length) {
-        msg.textContent = 'Välj minst en produkt.';
+        if (msg) {
+          msg.textContent = 'Välj minst en produkt.';
+          msg.className = 'error';
+        }
         return;
       }
-      msg.textContent = 'Skickar...';
-      const res = await fetch('/.netlify/functions/order', {
-        method: 'POST',
-        body: JSON.stringify({ name, phone, address, items }),
-      });
-      msg.textContent = res.ok ? 'Beställning skickad! Vi hörs snart.' : 'Något gick fel, försök igen.';
+
+      if (msg) {
+        msg.textContent = 'Skickar...';
+        msg.className = '';
+      }
+
+      try {
+        const res = await fetch('/.netlify/functions/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, email, address, items }),
+        });
+
+        if (msg) {
+          msg.textContent = res.ok ? 'Beställning skickad! Vi hörs snart.' : 'Något gick fel, försök igen.';
+          msg.className = res.ok ? 'success' : 'error';
+        }
+      } catch (err) {
+        if (msg) {
+          msg.textContent = 'Något gick fel, försök igen.';
+          msg.className = 'error';
+        }
+      }
     }
-  </script>
+</script>
 </div></body>
 </html>
