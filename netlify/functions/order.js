@@ -104,11 +104,11 @@ exports.handler = async (event) => {
         <h3>Produkter:</h3>
         <ul>${itemListAdmin}</ul>
 
-        <p><strong>Varor:&nbsp;</strong> ${productTotal} kr</p>
-        <p><strong>Leverans: </strong> ${
-          deliveryFee === 0 ? "Fri leverans" : `${deliveryFee} kr`
-        }</p>
-        <p><strong>Totalt: </strong> ${finalTotal} kr</p>
+        <p><strong>Varor:</strong>&nbsp;${productTotal} kr</p>
+<p><strong>Leverans:</strong>&nbsp;${
+  deliveryFee === 0 ? "Fri leverans" : `${deliveryFee} kr`
+}</p>
+<p><strong>Totalt:</strong>&nbsp;${finalTotal} kr</p>
       `,
     });
 
